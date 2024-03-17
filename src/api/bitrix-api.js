@@ -14,7 +14,8 @@ export function getCurrentID() {
 
 export function taskGet(id) {
   return new Promise((resolve, reject) => {
-    BX24.callMethod("crm.item.list",{entityTypeId: 180},(result) => {
+    BX24.callMethod("crm.item.list",{entityTypeId: 180, "filter": {
+      "@stageId": ["DT180_18:SUCCESS"],"@ufCrm12_1709726639": [id]}, "select": ['ufCrm12_1709726438', 'title']},(result) => {
       if (result.error()) {
         reject(result.error());
       } else {
@@ -23,28 +24,4 @@ export function taskGet(id) {
     });
   });
 }
-
-// export function taskComplete(id) {
-//   return new Promise((resolve, reject) => {
-//     BX24.callMethod("tasks.task.complete", { taskId: id }, (result) => {
-//       if (result.error()) {
-//         reject(result.error());
-//       } else {
-//         resolve(result.data());
-//       }
-//     });
-//   });
-// }
-
-// export function taskAside(id) {
-//   return new Promise((resolve, reject) => {
-//     BX24.callMethod("tasks.task.defer", { taskId: id }, (result) => {
-//       if (result.error()) {
-//         reject(result.error());
-//       } else {
-//         resolve(result.data());
-//       }
-//     });
-//   });
-// }
 

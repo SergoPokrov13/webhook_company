@@ -1,0 +1,25 @@
+.table__stroke{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    margin: 0;
+}
+
+.block{
+    width: 100%;
+    padding: 5px;
+    color: #545c6a;
+    text-align: center;
+}
+
+.block:last-child{
+    border-left: 1px solid #000;
+}
+
+.table__stroke:last-child{
+    border-bottom: 1px solid #000;
+}
