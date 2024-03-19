@@ -1,4 +1,19 @@
-import {BX24} from "../utils/utils";
+import {
+  BX24,
+  TITLE,
+  ID,
+  SKAN,
+  VIEW,
+  DATE_START,
+  DATE_END,
+  NUMBER,
+  TYPE_END,
+  DURATION,
+  PRICE,
+  CONDITION_PRICE,
+  ACCOUNTING_CENTERE,
+  AD_AGREEMENTS,
+} from "../utils/utils";
 
 export function getCurrentID() {
   return new Promise((resolve, reject) => {
@@ -12,16 +27,57 @@ export function getCurrentID() {
   });
 }
 
-export function taskGet(id) {
+export function agreementList(id) {
   return new Promise((resolve, reject) => {
-    BX24.callMethod("crm.item.list",{entityTypeId: 180, "filter": {
-      "@stageId": ["DT180_18:SUCCESS"],"@ufCrm12_1709726639": [id]}, "select": ['ufCrm12_1709726438', 'title']},(result) => {
-      if (result.error()) {
-        reject(result.error());
-      } else {
-        resolve(result.data());
+    BX24.callMethod(
+      "crm.item.list",
+      {
+        entityTypeId: 180,
+        filter: {
+          "@stageId": ["DT180_18:SUCCESS"],
+          "@ufCrm12_1709726639": [id],
+        },
+        select: [
+          TITLE,
+          ID,
+          SKAN,
+          VIEW,
+          DATE_START,
+          DATE_END,
+          NUMBER,
+          TYPE_END,
+          DURATION,
+          PRICE,
+          CONDITION_PRICE,
+          ACCOUNTING_CENTERE,
+          AD_AGREEMENTS,
+        ],
+      },
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          resolve(result.data());
+        }
       }
-    });
+    );
   });
 }
 
+export function agreementFields() {
+  return new Promise((resolve, reject) => {
+    BX24.callMethod(
+      "crm.item.fields",
+      {
+        entityTypeId: 180,
+      },
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          resolve(result.data());
+        }
+      }
+    );
+  });
+}
