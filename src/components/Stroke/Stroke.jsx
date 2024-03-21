@@ -7,6 +7,9 @@ function Stroke({
   dateStart,
   number,
   skan,
+  Link,
+  title,
+  nameSkan,
   dateEnd,
   typeEnd,
   duration,
@@ -14,22 +17,23 @@ function Stroke({
   conditionPrice,
   acCentere,
   adAgreements,
+  hover,
 }) {
   return (
-    <div className="table__stroke">
-        <div className="block">{id}</div>
-        <div className="block">{name}</div>
-        <div className="block">{view}</div>
-        <div className="block">{dateStart}</div>
-        <div className="block">{number}</div>
-        <div className="block">{skan}</div>
-        <div className="block">{dateEnd}</div>
-        <div className="block">{typeEnd}</div>
-        <div className="block">{duration}</div>
-        <div className="block">{price}</div>
-        <div className="block">{conditionPrice}</div>
-        <div className="block">{acCentere}</div>
-        <div className="block">{adAgreements}</div>
+    <div className={`table__stroke ${hover}-stroke`}>
+        <div className={`block ${title} ${hover}-block`}>{id}</div>
+        <div className={`block ${title} ${hover}-block`}>{name}</div>
+        <div className={`block ${title} ${hover}-block`}>{view}</div>
+        <div className={`block ${title} ${hover}-block`}>{dateStart}</div>
+        <div className={`block ${title} ${hover}-block`}>{number}</div>
+        <div className={`block ${title} ${hover}-block`}><a className={Link} href={skan}>{nameSkan}</a></div>
+        <div className={`block ${title} ${hover}-block`}>{dateEnd}</div>
+        <div className={`block ${title} ${hover}-block`}>{typeEnd}</div>
+        <div className={`block ${title} ${hover}-block`}>{duration}</div>
+        <div className={`block ${title} ${hover}-block`}>{price}</div>
+        <div className={`block ${title} ${hover}-block`}>{conditionPrice}</div>
+        <div className={`block ${title} ${hover}-block`}>{acCentere}</div>
+        <div className={`block ${title} ${hover}-block`}>{adAgreements}</div>
     </div>
   );
 }

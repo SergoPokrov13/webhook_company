@@ -1,22 +1,7 @@
 import "./App.css";
-import { getCurrentID, agreementList, agreementFields } from "./api/bitrix-api";
+import { getCurrentID, agreementList, agreementFields, listGet, listField } from "./api/bitrix-api";
 import { useEffect, useState } from "react";
 import Table from "./components/Table/Table.jsx";
-import {
-  TITLE,
-  ID,
-  SKAN,
-  VIEW,
-  DATE_START,
-  DATE_END,
-  NUMBER,
-  TYPE_END,
-  DURATION,
-  PRICE,
-  CONDITION_PRICE,
-  ACCOUNTING_CENTERE,
-  AD_AGREEMENTS,
-} from "./utils/utils";
 import Stroke from "./components/Stroke/Stroke.jsx";
 
 function App() {
@@ -26,16 +11,27 @@ function App() {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    getCurrentID();
+    getCurrentID().then
     agreementList(id).then((data) => {
+      let arr = []
+      data.items.map((i)=>( 
+        arr.push(i.id)
+      ))
+      listGet(arr).then()
+      // listField(arr).then(console.log)
+      // console.log(data.items)
       setDataList(data.items);
     })
+
     agreementFields()
     .then((data) => {
+      // console.log(data.fields)
       setDataFiels(data.fields)
     })
       .finally(setLoad(true));
   }, []);
+
+
 
   return load ? (
     <>
@@ -45,7 +41,9 @@ function App() {
         view='Вид договора'
         dateStart='Дата начала договора'
         number='Номер документа'
-        skan='Скан подписанного документа'
+        Link="no_link"
+        title="title"
+        nameSkan='Скан подписанного документа'
         dateEnd='Дата окончания договора'
         typeEnd='Тип окончания договора'
         duration='Длительность'
