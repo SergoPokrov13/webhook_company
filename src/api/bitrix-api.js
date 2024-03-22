@@ -104,24 +104,24 @@ export function listGet(arr) {
   });
 }
 
-export function listField(arr) {
-  return new Promise((resolve, reject) => {
-    BX24.callMethod(
-      "lists.field.get",
-      {
-        IBLOCK_TYPE_ID: "lists",
-        IBLOCK_ID: "36",
-        // FILTER: {
-        //   "PROPERTY_218": arr,
-        // },
-      },
-      (result) => {
-        if (result.error()) {
-          reject(result.error());
-        } else {
-          resolve(result.data());
-        }
-      }
-    );
-  });
-}
+// export function listField(arr) {
+//   return new Promise((resolve, reject) => {
+//     BX24.callMethod(
+//       "lists.field.get",
+//       {
+//         IBLOCK_TYPE_ID: "lists",
+//         IBLOCK_ID: "36",
+//         // FILTER: {
+//         //   "PROPERTY_218": arr,
+//         // },
+//       },
+//       (result) => {
+//         if (result.error()) {
+//           reject(result.error());
+//         } else {
+//           resolve(result.data());
+//         }
+//       }
+//     );
+//   });
+// }

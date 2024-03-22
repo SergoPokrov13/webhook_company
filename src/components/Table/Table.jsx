@@ -16,9 +16,16 @@ import {
   AD_AGREEMENTS,
 } from "../../utils/utils";
 
-function Table({ dataList, dataFiels }) {
+function Table({ dataList, dataFiels, dataFiles }) {
   const addString = (element, name) => {
     return dataFiels[name].items.find((i) => i.ID == element)?.VALUE;
+  };
+
+  const addFiles = (element) => {
+     return dataFiles.map((i) =>{
+      if(Object.values(i.PROPERTY_218)[0] == element){
+        return `https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&objectId=${Object.values(i.PROPERTY_216)[0]}&attachedObjectId=0&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`
+      }});
   };
 
   const dateParse = (date) => {
@@ -29,6 +36,10 @@ function Table({ dataList, dataFiels }) {
     }
   };
 
+  dataFiles.map((item) =>{
+    // console.log(Object.values(item.PROPERTY_218)[0])
+  })
+
   return dataList.map((i) => (
     <Stroke
       id={i[ID]}
@@ -36,9 +47,9 @@ function Table({ dataList, dataFiels }) {
       view={addString(i[VIEW], VIEW)}
       dateStart={dateParse(i[DATE_START])}
       number={i[NUMBER]}
-      skan={i[SKAN][0].url}
+      skan={addFiles(i[ID])}
       Link="link"
-      nameSkan={i[TITLE]}
+      nameSkan={addFiles(i[ID])}
       dateEnd={dateParse(i[DATE_END])}
       typeEnd={addString(i[TYPE_END], TYPE_END)}
       duration={addString(i[DURATION], DURATION)}

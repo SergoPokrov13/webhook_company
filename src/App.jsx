@@ -1,5 +1,5 @@
 import "./App.css";
-import { getCurrentID, agreementList, agreementFields, listGet, listField } from "./api/bitrix-api";
+import { getCurrentID, agreementList, agreementFields, listGet } from "./api/bitrix-api";
 import { useEffect, useState } from "react";
 import Table from "./components/Table/Table.jsx";
 import Stroke from "./components/Stroke/Stroke.jsx";
@@ -8,26 +8,36 @@ function App() {
   const [id, setId] = useState("778");
   const [dataList, setDataList] = useState([]);
   const [dataFiels, setDataFiels] = useState([]);
+  const [dataFiles, setDataFiles] = useState([]);
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
     getCurrentID().then
     agreementList(id).then((data) => {
-      let arr = []
-      data.items.map((i)=>( 
-        arr.push(i.id)
+      let arrId = []
+      data.items.map((i) => (
+        arrId.push(i.id)
       ))
-      listGet(arr).then()
+      listGet(arrId).then((data) => {
+        setDataFiles(data)
+        console.log(data)
+        // let arrSkan = []
+        // data.map((i) =>
+        //   arrSkan.push(i.PROPERTY_216)
+        // )
+        // console.log(arr)
+      })
+
       // listField(arr).then(console.log)
-      // console.log(data.items)
+      console.log(data.items)
       setDataList(data.items);
     })
 
     agreementFields()
-    .then((data) => {
-      // console.log(data.fields)
-      setDataFiels(data.fields)
-    })
+      .then((data) => {
+        // console.log(data.fields)
+        setDataFiels(data.fields)
+      })
       .finally(setLoad(true));
   }, []);
 
@@ -52,7 +62,7 @@ function App() {
         acCentere='Центр учета'
         adAgreements='Доп. Соглашения'
       ></Stroke>
-      <Table dataList={dataList} dataFiels={dataFiels}></Table>
+      <Table dataList={dataList} dataFiles={dataFiles} dataFiels={dataFiels}></Table>
     </>
   ) : (
     <>Загрузка...</>
