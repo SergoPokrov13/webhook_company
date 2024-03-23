@@ -29,7 +29,7 @@ function App() {
       })
 
       // listField(arr).then(console.log)
-      console.log(data.items)
+      // console.log(data.items)
       setDataList(data.items);
     })
 

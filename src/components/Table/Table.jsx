@@ -22,10 +22,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
   };
 
   const addFiles = (element) => {
-     return dataFiles.map((i) =>{
-      if(Object.values(i.PROPERTY_218)[0] == element){
-        return `https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&objectId=${Object.values(i.PROPERTY_216)[0]}&attachedObjectId=0&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`
-      }});
+    return dataFiles.find((i) => Object.values(i.PROPERTY_218)[0] == element)?.PROPERTY_216;
   };
 
   const dateParse = (date) => {
@@ -36,10 +33,6 @@ function Table({ dataList, dataFiels, dataFiles }) {
     }
   };
 
-  dataFiles.map((item) =>{
-    // console.log(Object.values(item.PROPERTY_218)[0])
-  })
-
   return dataList.map((i) => (
     <Stroke
       id={i[ID]}
@@ -49,7 +42,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
       number={i[NUMBER]}
       skan={addFiles(i[ID])}
       Link="link"
-      nameSkan={addFiles(i[ID])}
+      nameSkan={i[ID]}
       dateEnd={dateParse(i[DATE_END])}
       typeEnd={addString(i[TYPE_END], TYPE_END)}
       duration={addString(i[DURATION], DURATION)}

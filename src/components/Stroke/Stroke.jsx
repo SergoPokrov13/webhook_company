@@ -1,4 +1,5 @@
 import "./Stroke.css";
+import {useState } from "react";
 
 function Stroke({
   id,
@@ -19,6 +20,12 @@ function Stroke({
   adAgreements,
   hover,
 }) {
+  // const [arrFiles, setArrFiles] = useState([]);
+
+  // if(skan){
+  //   setArrFiles(Object.values(skan))
+  // }
+
   return (
     <div className={`table__stroke ${hover}-stroke`}>
         <div className={`block ${title} ${hover}-block`}>{id}</div>
@@ -26,7 +33,8 @@ function Stroke({
         <div className={`block ${title} ${hover}-block`}>{view}</div>
         <div className={`block ${title} ${hover}-block`}>{dateStart}</div>
         <div className={`block ${title} ${hover}-block`}>{number}</div>
-        <div className={`block ${title} ${hover}-block`}><a className={Link} href={skan}>{nameSkan}</a></div>
+        <div className={`block ${title} ${hover}-block`}>
+        </div>
         <div className={`block ${title} ${hover}-block`}>{dateEnd}</div>
         <div className={`block ${title} ${hover}-block`}>{typeEnd}</div>
         <div className={`block ${title} ${hover}-block`}>{duration}</div>
