@@ -18,6 +18,8 @@
   min-height: 65px;
   margin: 0;
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   padding: 5px;

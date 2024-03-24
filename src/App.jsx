@@ -1,5 +1,5 @@
 import "./App.css";
-import { getCurrentID, agreementList, agreementFields, listGet } from "./api/bitrix-api";
+import { getCurrentID, agreementList, agreementFields, listGet, diskGetChildren } from "./api/bitrix-api";
 import { useEffect, useState } from "react";
 import Table from "./components/Table/Table.jsx";
 import Stroke from "./components/Stroke/Stroke.jsx";
@@ -21,17 +21,11 @@ function App() {
       listGet(arrId).then((data) => {
         setDataFiles(data)
         console.log(data)
-        // let arrSkan = []
-        // data.map((i) =>
-        //   arrSkan.push(i.PROPERTY_216)
-        // )
-        // console.log(arr)
       })
-
-      // listField(arr).then(console.log)
       // console.log(data.items)
       setDataList(data.items);
     })
+    diskGetChildren().then((data)=>{console.log(data)})
 
     agreementFields()
       .then((data) => {
