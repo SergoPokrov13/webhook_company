@@ -22,7 +22,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
   };
 
   const addFiles = (element) => {
-    return dataFiles.find((i) => Object.values(i.PROPERTY_218)[0] == element)?.PROPERTY_216;
+    return dataFiles.find((i) => Object.values(i.PROPERTY_218)[0] == element)?.ID;
   };
 
   const dateParse = (date) => {
@@ -42,7 +42,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
       number={i[NUMBER]}
       skan={addFiles(i[ID])}
       Link="link"
-      // nameSkan={i[ID]}
+      nameSkan={i[ID]}
       dateEnd={dateParse(i[DATE_END])}
       typeEnd={addString(i[TYPE_END], TYPE_END)}
       duration={addString(i[DURATION], DURATION)}

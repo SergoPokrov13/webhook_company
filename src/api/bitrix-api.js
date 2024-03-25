@@ -104,23 +104,40 @@ export function listGet(arr) {
   });
 }
 
-export function diskGetChildren() {
-  return new Promise((resolve, reject) => {
+export function setIdFile(id) {
+  return new Promise(() => {
     BX24.callMethod(
-      "disk.storage.getchildren",
+      "lists.element.get",
       {
-        id: 1,
-        filter: {
-          PARENT_ID: 44
+        'IBLOCK_TYPE_ID': 'lists',
+        'IBLOCK_ID': '36',
+        'ELEMENT_ID': id
+      },
+      function (result) {
+        if (result.error())
+          console.error(result.error());
+        else{
+          let filesId = Object.values(result.data()[0]['PROPERTY_216'])[0]
+          for (const key in filesId) {
+            BX24.callMethod(
+              "disk.attachedObject.get",
+              {
+                id: filesId[key]
+              },
+              function (result) {
+                if (result.error())
+                  console.error(result.error());
+                else
+                  console.dir(result.data()['OBJECT_ID']);
+              }
+            );
+          }
+          
         }
-      }, 
-      (result) => {
-        if (result.error()) {
-          reject(result.error());
-        } else {
-          resolve(result.data());
-        }
+        
       }
     );
   });
 }
+
+
