@@ -5,7 +5,7 @@ import Table from "./components/Table/Table.jsx";
 import Stroke from "./components/Stroke/Stroke.jsx";
 
 function App() {
-  const [id, setId] = useState("778");
+  const [id, setId] = useState("780");
   const [dataList, setDataList] = useState([]);
   const [dataFiels, setDataFiels] = useState([]);
   const [dataFiles, setDataFiles] = useState([]);
@@ -20,7 +20,7 @@ function App() {
       ))
       listGet(arrId).then((data) => {
         setDataFiles(data)
-        console.log(data)
+        // console.log(data)
       })
       // console.log(data.items)
       setDataList(data.items);

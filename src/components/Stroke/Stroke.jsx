@@ -1,5 +1,5 @@
 import "./Stroke.css";
-import { setIdFile } from "../../api/bitrix-api";
+import { setIdFile, diskGet } from "../../api/bitrix-api";
 import { useState, useEffect } from "react";
 
 function Stroke({
@@ -8,7 +8,7 @@ function Stroke({
   view,
   dateStart,
   number,
-  skan,
+  Idskan,
   Link,
   title,
   nameSkan,
@@ -21,23 +21,38 @@ function Stroke({
   adAgreements,
   hover,
 }) {
-  let skanFiles = [];
-  const [fileId, setfileId] =useState([])
-  const [listId, setListId] =useState(skan)
+  const [skanFiles, setSkanFiles] = useState([]);
+  const [fetch, setFetch] = useState(false);
 
-  useEffect(()=>{
-    if (skan) {
-      setIdFile(skan).then((data) => {
-        data.items.map((i) => (
-          skanFiles.push(i.id)
-        ))
+  if (fetch == false) {
+    if (skanFiles.length == 0) {
+      setIdFile(Idskan).then((data) => {
+        setSkanFiles([...skanFiles, data.OBJECT_ID]);
+      });
+    } else {
+      setIdFile(Idskan).then((data) => {
+        skanFiles.map((i) => {
+          if (i == data.OBJECT_ID) {
+            skanFiles.filter((el) => el !== i);
+          } else {
+            setSkanFiles([...skanFiles, data.OBJECT_ID]);
+            setFetch(true);
+          }
+        });
       });
     }
-  }, listId)
+  }
 
-  console.log(skanFiles)
+  const addNameFile = (id) =>{
+    diskGet(id).then((data)=>{
+      console.log(data.NAME)
+      return data.NAME
+    })
+  }
 
-  return (
+  console.log(skanFiles, fetch)
+
+  return fetch ?(
     <div className={`table__stroke ${hover}-stroke`}>
       <div className={`block ${title} ${hover}-block`}>
         <p className='text'>{id}</p>
@@ -55,17 +70,21 @@ function Stroke({
         <p className='text'>{number}</p>
       </div>
       <div className={`block ${title} ${hover}-block`}>
-        {nameSkan}
-        {fileId.map((i) => (
-          <a
-            className={Link}
-            key={i}
-            target='_blank'
-            href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${i}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
-          >
-            {}
-          </a>
-        ))}
+        <p className="text">{nameSkan}</p>
+        {
+        skanFiles.map((i) => {
+              <a
+                className={Link}
+                key={i}
+                target='_blank'
+                href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${i}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
+              >
+                ddddd{/* {addNameFile(i)} */}
+              </a>
+              console.log(i)
+            })
+  
+          }
       </div>
       <div className={`block ${title} ${hover}-block`}>
         <p className='text'>{dateEnd}</p>
@@ -89,7 +108,24 @@ function Stroke({
         <p className='text'>{adAgreements}</p>
       </div>
     </div>
-  );
+  )
+  :
+  ''
 }
 
 export default Stroke;
+
+// {/* {fileId.map((i) => ( */}
+// {Idskan ?
+//   <a
+//     className={Link}
+//     // key={i}
+//     target='_blank'
+//     href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${Idskan}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
+//   >
+//     swww
+//   </a>
+//   :
+//   ''
+//   }
+// {/* // ))} */}

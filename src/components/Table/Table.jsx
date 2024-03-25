@@ -40,9 +40,8 @@ function Table({ dataList, dataFiels, dataFiles }) {
       view={addString(i[VIEW], VIEW)}
       dateStart={dateParse(i[DATE_START])}
       number={i[NUMBER]}
-      skan={addFiles(i[ID])}
+      Idskan={addFiles(i[ID])}
       Link="link"
-      nameSkan={i[ID]}
       dateEnd={dateParse(i[DATE_END])}
       typeEnd={addString(i[TYPE_END], TYPE_END)}
       duration={addString(i[DURATION], DURATION)}

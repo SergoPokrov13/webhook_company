@@ -105,7 +105,7 @@ export function listGet(arr) {
 }
 
 export function setIdFile(id) {
-  return new Promise(() => {
+  return new Promise((resolve, reject) => {
     BX24.callMethod(
       "lists.element.get",
       {
@@ -125,10 +125,11 @@ export function setIdFile(id) {
                 id: filesId[key]
               },
               function (result) {
-                if (result.error())
-                  console.error(result.error());
-                else
-                  console.dir(result.data()['OBJECT_ID']);
+                if (result.error()) {
+                  reject(result.error());
+                } else {
+                  resolve(result.data());
+                }
               }
             );
           }
@@ -139,5 +140,24 @@ export function setIdFile(id) {
     );
   });
 }
+
+export function diskGet(id) {
+  return new Promise((resolve, reject) => {
+    BX24.callMethod(
+      "disk.file.get",
+      {
+        id: id,
+      },
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          resolve(result.data());
+        }
+      }
+    );
+  });
+}
+
 
 
