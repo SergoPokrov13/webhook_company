@@ -113,29 +113,30 @@ export function setIdFile(id) {
         'IBLOCK_ID': '36',
         'ELEMENT_ID': id
       },
-      function (result) {
-        if (result.error())
-          console.error(result.error());
-        else{
-          let filesId = Object.values(result.data()[0]['PROPERTY_216'])[0]
-          for (const key in filesId) {
-            BX24.callMethod(
-              "disk.attachedObject.get",
-              {
-                id: filesId[key]
-              },
-              function (result) {
-                if (result.error()) {
-                  reject(result.error());
-                } else {
-                  resolve(result.data());
-                }
-              }
-            );
-          }
-          
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          resolve(Object.values(result.data()[0]['PROPERTY_216'])[0]);
         }
-        
+      }
+    );
+  });
+}
+
+export function addObject(id) {
+  return new Promise((resolve, reject) => {
+    BX24.callMethod(
+      "disk.attachedObject.get",
+      {
+        id: id
+      },
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          resolve(result.data());
+        }
       }
     );
   });

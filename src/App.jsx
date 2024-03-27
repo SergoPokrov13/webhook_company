@@ -5,7 +5,7 @@ import Table from "./components/Table/Table.jsx";
 import Stroke from "./components/Stroke/Stroke.jsx";
 
 function App() {
-  const [id, setId] = useState("780");
+  const [id, setId] = useState("778");
   const [dataList, setDataList] = useState([]);
   const [dataFiels, setDataFiels] = useState([]);
   const [dataFiles, setDataFiles] = useState([]);
@@ -47,6 +47,7 @@ function App() {
         number='Номер документа'
         Link="no_link"
         title="title"
+        isLoad={true}
         nameSkan='Скан подписанного документа'
         dateEnd='Дата окончания договора'
         typeEnd='Тип окончания договора'

@@ -18,7 +18,9 @@ import {
 
 function Table({ dataList, dataFiels, dataFiles }) {
   const addString = (element, name) => {
-    return dataFiels[name].items.find((i) => i.ID == element)?.VALUE;
+    if(dataFiels){
+      return dataFiels[name].items.find((i) => i.ID == element)?.VALUE;
+    }
   };
 
   const addFiles = (element) => {

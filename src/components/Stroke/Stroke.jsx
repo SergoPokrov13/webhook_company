@@ -1,5 +1,5 @@
 import "./Stroke.css";
-import { setIdFile, diskGet } from "../../api/bitrix-api";
+import { setIdFile, diskGet, addObject } from "../../api/bitrix-api";
 import { useState, useEffect } from "react";
 
 function Stroke({
@@ -21,38 +21,37 @@ function Stroke({
   adAgreements,
   hover,
 }) {
-  const [skanFiles, setSkanFiles] = useState([]);
-  const [fetch, setFetch] = useState(false);
+  const [Object, setObject] = useState();
+  const [isLoad, setIsLoad] = useState(false);
 
-  if (fetch == false) {
-    if (skanFiles.length == 0) {
+  useEffect(() => {
+    if (Idskan) {
       setIdFile(Idskan).then((data) => {
-        setSkanFiles([...skanFiles, data.OBJECT_ID]);
-      });
-    } else {
-      setIdFile(Idskan).then((data) => {
-        skanFiles.map((i) => {
-          if (i == data.OBJECT_ID) {
-            skanFiles.filter((el) => el !== i);
-          } else {
-            setSkanFiles([...skanFiles, data.OBJECT_ID]);
-            setFetch(true);
-          }
-        });
-      });
+        let lenghID = data.length;
+        let arr= []
+        data.map((i)=>{
+          addObject(i).then((data)=>{
+            diskGet(data.OBJECT_ID).then((data)=>{
+              let object =
+                {
+                  id: data.ID,
+                  name: data.NAME,
+                }
+                arr.push(object)
+                setObject(arr)
+                if(arr.length == lenghID){
+                  setIsLoad(true)
+                }
+            })
+          })
+        })
+      })
     }
-  }
+  }, [Idskan]);
 
-  const addNameFile = (id) =>{
-    diskGet(id).then((data)=>{
-      console.log(data.NAME)
-      return data.NAME
-    })
-  }
+  console.log(isLoad, Object)
 
-  console.log(skanFiles, fetch)
-
-  return fetch ?(
+  return (
     <div className={`table__stroke ${hover}-stroke`}>
       <div className={`block ${title} ${hover}-block`}>
         <p className='text'>{id}</p>
@@ -70,21 +69,21 @@ function Stroke({
         <p className='text'>{number}</p>
       </div>
       <div className={`block ${title} ${hover}-block`}>
-        <p className="text">{nameSkan}</p>
-        {
-        skanFiles.map((i) => {
-              <a
-                className={Link}
-                key={i}
-                target='_blank'
-                href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${i}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
-              >
-                ddddd{/* {addNameFile(i)} */}
-              </a>
-              console.log(i)
+        <p className='text'>{nameSkan}</p>
+        {isLoad
+          ? Object.map((i) => {
+              return (
+                <a
+                  className={Link}
+                  key={i}
+                  target='_blank'
+                  href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${i.id}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
+                >
+                {i.name}
+                </a>
+              );
             })
-  
-          }
+          : ""}
       </div>
       <div className={`block ${title} ${hover}-block`}>
         <p className='text'>{dateEnd}</p>
@@ -108,9 +107,7 @@ function Stroke({
         <p className='text'>{adAgreements}</p>
       </div>
     </div>
-  )
-  :
-  ''
+  );
 }
 
 export default Stroke;
