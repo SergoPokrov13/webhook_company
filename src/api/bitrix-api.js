@@ -14,7 +14,7 @@ import {
   ACCOUNTING_CENTERE,
   AD_AGREEMENTS,
   MAIN_AGREEMENT,
-  TYPE_DOCUMENT
+  TYPE_DOCUMENT,
 } from "../utils/utils";
 
 export function getCurrentID() {
@@ -30,6 +30,7 @@ export function getCurrentID() {
 }
 
 export function agreementList(id) {
+  let arr = [];
   return new Promise((resolve, reject) => {
     BX24.callMethod(
       "crm.item.list",
@@ -54,21 +55,19 @@ export function agreementList(id) {
           ACCOUNTING_CENTERE,
           AD_AGREEMENTS,
           MAIN_AGREEMENT,
-          TYPE_DOCUMENT
+          TYPE_DOCUMENT,
         ],
       },
       (result) => {
-        let arr = []
         if (result.error()) {
           reject(result.error());
         } else {
-          if(result.more()){
-            let data = result.data()
-            console.log(data)
-            arr.concat(data)
-            }else{
-            resolve(arr)
-            }
+          arr = arr.concat(result.data().items);
+          if (result.more()) {
+            result.next();
+          } else {
+            resolve({ items: arr });
+          }
         }
       }
     );
@@ -101,7 +100,7 @@ export function listGet(arr) {
         IBLOCK_TYPE_ID: "lists",
         IBLOCK_ID: "36",
         FILTER: {
-          "PROPERTY_218": arr,
+          PROPERTY_218: arr,
         },
       },
       (result) => {
@@ -120,15 +119,15 @@ export function setIdFile(id) {
     BX24.callMethod(
       "lists.element.get",
       {
-        'IBLOCK_TYPE_ID': 'lists',
-        'IBLOCK_ID': '36',
-        'ELEMENT_ID': id
+        IBLOCK_TYPE_ID: "lists",
+        IBLOCK_ID: "36",
+        ELEMENT_ID: id,
       },
       (result) => {
         if (result.error()) {
           reject(result.error());
         } else {
-          resolve(Object.values(result.data()[0]['PROPERTY_216'])[0]);
+          resolve(Object.values(result.data()[0]["PROPERTY_216"])[0]);
         }
       }
     );
@@ -140,7 +139,7 @@ export function addObject(id) {
     BX24.callMethod(
       "disk.attachedObject.get",
       {
-        id: id
+        id: id,
       },
       (result) => {
         if (result.error()) {
@@ -170,6 +169,3 @@ export function diskGet(id) {
     );
   });
 }
-
-
-
