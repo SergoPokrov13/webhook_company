@@ -59,7 +59,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
     }
   };
 
-  console.log(data);
+  // console.log(data);
 
   if (data) {
     return data.map((i) => (

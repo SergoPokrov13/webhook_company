@@ -51,9 +51,6 @@ function Stroke({
         })
       })
     }
-    // if(type == TYPE_CONVENTION){
-    //   title = ''
-    // }
   }, [Idskan]);
 
 

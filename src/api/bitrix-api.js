@@ -58,10 +58,17 @@ export function agreementList(id) {
         ],
       },
       (result) => {
+        let arr = []
         if (result.error()) {
           reject(result.error());
         } else {
-          resolve(result.data());
+          if(result.more()){
+            let data = result.data()
+            console.log(data)
+            arr.concat(data)
+            }else{
+            resolve(arr)
+            }
         }
       }
     );

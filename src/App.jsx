@@ -21,7 +21,7 @@ function App() {
       listGet(arrId).then((data) => {
         setDataFiles(data)
       })
-      // console.log(data.items)
+      console.log(data.items)
       setDataList(data.items);
     })
 
