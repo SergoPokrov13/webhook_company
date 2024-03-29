@@ -1,6 +1,6 @@
 .table__stroke {
-  min-width: 1300px;
-  max-width: 100%;
+  min-width: 1200px;
+  max-width: 1200px;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -33,7 +33,7 @@
 .text{
   margin: 0;
   padding: 0;
-  max-width: 100px;
+  min-width: 75px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -46,8 +46,8 @@
 }
 
 .block:first-child {
-  min-width: 75px;
-  max-width: 75px;
+  min-width: 76px;
+  max-width: 76px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
@@ -69,6 +69,14 @@
     font-weight: 500;
     color: #000;
     background-color: #e0dede;
+}
+
+.convention{
+  font-style: italic;
+}
+
+.agreement{
+  color: #30353b;
 }
 
 .hover-stroke:hover {

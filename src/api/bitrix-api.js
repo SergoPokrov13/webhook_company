@@ -13,6 +13,8 @@ import {
   CONDITION_PRICE,
   ACCOUNTING_CENTERE,
   AD_AGREEMENTS,
+  MAIN_AGREEMENT,
+  TYPE_DOCUMENT
 } from "../utils/utils";
 
 export function getCurrentID() {
@@ -51,6 +53,8 @@ export function agreementList(id) {
           CONDITION_PRICE,
           ACCOUNTING_CENTERE,
           AD_AGREEMENTS,
+          MAIN_AGREEMENT,
+          TYPE_DOCUMENT
         ],
       },
       (result) => {

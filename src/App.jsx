@@ -20,7 +20,6 @@ function App() {
       ))
       listGet(arrId).then((data) => {
         setDataFiles(data)
-        // console.log(data)
       })
       // console.log(data.items)
       setDataList(data.items);
@@ -34,7 +33,6 @@ function App() {
       })
       .finally(setLoad(true));
   }, []);
-
 
 
   return load ? (
@@ -55,7 +53,6 @@ function App() {
         price='Стоимость'
         conditionPrice='Условия оплаты'
         acCentere='Центр учета'
-        adAgreements='Доп. Соглашения'
       ></Stroke>
       <Table dataList={dataList} dataFiles={dataFiles} dataFiels={dataFiels}></Table>
     </>
