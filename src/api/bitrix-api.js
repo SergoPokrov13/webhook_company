@@ -30,15 +30,16 @@ export function getCurrentID() {
 }
 
 export function agreementList(id) {
+  console.log(id)
   let arr = [];
   return new Promise((resolve, reject) => {
     BX24.callMethod(
       "crm.item.list",
       {
-        entityTypeId: 180,
+        entityTypeId: 145,
         filter: {
-          "@stageId": ["DT180_18:SUCCESS"],
-          "@ufCrm12_1709726639": [id],
+          "@stageId": ["DT145_10:SUCCESS", "DT145_10:PREPARATION"],
+          "@ufCrm6_1702368155": [id], 
         },
         select: [
           TITLE,
@@ -79,7 +80,7 @@ export function agreementFields() {
     BX24.callMethod(
       "crm.item.fields",
       {
-        entityTypeId: 180,
+        entityTypeId: 145,
       },
       (result) => {
         if (result.error()) {
@@ -98,9 +99,9 @@ export function listGet(arr) {
       "lists.element.get",
       {
         IBLOCK_TYPE_ID: "lists",
-        IBLOCK_ID: "36",
+        IBLOCK_ID: "116",
         FILTER: {
-          PROPERTY_218: arr,
+          PROPERTY_1560: arr,
         },
       },
       (result) => {
@@ -120,7 +121,7 @@ export function setIdFile(id) {
       "lists.element.get",
       {
         IBLOCK_TYPE_ID: "lists",
-        IBLOCK_ID: "36",
+        IBLOCK_ID: "116",
         ELEMENT_ID: id,
       },
       (result) => {
@@ -128,6 +129,31 @@ export function setIdFile(id) {
           reject(result.error());
         } else {
           resolve(Object.values(result.data()[0]["PROPERTY_216"])[0]);
+        }
+      }
+    );
+  });
+}
+
+export function setID() {
+  let arr = [];
+  return new Promise((resolve, reject) => {
+    BX24.callMethod(
+      "lists.element.get",
+      {
+        IBLOCK_TYPE_ID: "lists",
+        IBLOCK_ID: "106",
+      },
+      (result) => {
+        if (result.error()) {
+          reject(result.error());
+        } else {
+          arr = arr.concat(result.data());
+          if (result.more()) {
+            result.next();
+          } else {
+            resolve({ items: arr });
+          }
         }
       }
     );

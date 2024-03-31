@@ -1,5 +1,4 @@
 import Stroke from "../Stroke/Stroke";
-import "./Table.css";
 import { useState, useEffect } from "react";
 import {
   TITLE,
@@ -47,7 +46,7 @@ function Table({ dataList, dataFiels, dataFiles }) {
   };
 
   const addFiles = (element) => {
-    return dataFiles.find((i) => Object.values(i.PROPERTY_218)[0] == element)
+    return dataFiles.find((i) => Object.values(i.PROPERTY_1560)[0] == element)
       ?.ID;
   };
 

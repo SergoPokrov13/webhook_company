@@ -1,34 +1,41 @@
 import "./App.css";
-import { getCurrentID, agreementList, agreementFields, listGet} from "./api/bitrix-api";
+import { getCurrentID, agreementList, agreementFields, listGet, setID} from "./api/bitrix-api";
 import { useEffect, useState } from "react";
 import Table from "./components/Table/Table.jsx";
 import Stroke from "./components/Stroke/Stroke.jsx";
 
 function App() {
-  const [id, setId] = useState("778");
   const [dataList, setDataList] = useState([]);
   const [dataFiels, setDataFiels] = useState([]);
   const [dataFiles, setDataFiles] = useState([]);
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
-    getCurrentID().then
-    agreementList(id).then((data) => {
-      let arrId = []
-      data.items.map((i) => (
-        arrId.push(i.id)
-      ))
-      listGet(arrId).then((data) => {
-        setDataFiles(data)
+    getCurrentID().then((data)=>{
+      let id = data.options.GROUP_ID
+      setID().then((data)=>{
+        data.items.map((i)=>{
+          if(Object.values(i.PROPERTY_1560) == id){
+            agreementList(i.ID).then((data) => {
+              let arrId = []
+              data.items.map((i) => (
+                arrId.push(i.id)
+              ))
+              listGet(arrId).then((data) => {
+                setDataFiles(data)
+              })
+              console.log(data.items)
+              setDataList(data.items);
+            })
+        
+          }
+        })
       })
-      console.log(data.items)
-      setDataList(data.items);
     })
-
 
     agreementFields()
       .then((data) => {
-        // console.log(data.fields)
+        console.log(data.fields)
         setDataFiels(data.fields)
       })
       .finally(setLoad(true));
