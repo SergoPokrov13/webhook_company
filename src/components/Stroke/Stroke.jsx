@@ -31,11 +31,13 @@ function Stroke({
   useEffect(() => {
     if (Idskan) {
       setIdFile(Idskan).then((data) => {
+        console.log(data)
         let lenghID = data.length;
         let arr= []
         data.map((i)=>{
           addObject(i).then((data)=>{
             diskGet(data.OBJECT_ID).then((data)=>{
+              console.log(data)
               let object =
                 {
                   id: data.ID,
@@ -75,12 +77,13 @@ function Stroke({
         <p className='text'>{nameSkan}</p>
         {isLoad
           ? Object.map((i) => {
+            console.log(i.id)
               return (
                 <a
                   className={Link}
                   key={i}
                   target='_blank'
-                  href={`https://itr24.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&attachedObjectId=${i.id}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
+                  href={`https://caverion.bitrix24.ru/bitrix/services/main/ajax.php?action=disk.api.documentService.goToPreview&serviceCode=onlyoffice&objectId=${i.id}&versionId=0&IFRAME=Y&IFRAME_TYPE=SIDE_SLIDER`}
                 >
                 {i.name}
                 </a>

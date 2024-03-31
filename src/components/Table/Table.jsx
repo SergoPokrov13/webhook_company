@@ -46,8 +46,9 @@ function Table({ dataList, dataFiels, dataFiles }) {
   };
 
   const addFiles = (element) => {
-    return dataFiles.find((i) => Object.values(i.PROPERTY_1560)[0] == element)
+    return dataFiles.find((i) => Object.values(i.PROPERTY_1652) == element)
       ?.ID;
+
   };
 
   const dateParse = (date) => {

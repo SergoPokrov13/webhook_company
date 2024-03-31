@@ -11,9 +11,11 @@ function App() {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
+    BX24.resizeWindow(1240, 600);
     getCurrentID().then((data)=>{
       let id = data.options.GROUP_ID
       setID().then((data)=>{
+        console.log(data.items)
         data.items.map((i)=>{
           if(Object.values(i.PROPERTY_1560) == id){
             agreementList(i.ID).then((data) => {
@@ -21,8 +23,10 @@ function App() {
               data.items.map((i) => (
                 arrId.push(i.id)
               ))
+              console.log(arrId)
               listGet(arrId).then((data) => {
                 setDataFiles(data)
+                console.log(data)
               })
               console.log(data.items)
               setDataList(data.items);

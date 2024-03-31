@@ -38,7 +38,7 @@ export function agreementList(id) {
       {
         entityTypeId: 145,
         filter: {
-          "@stageId": ["DT145_10:SUCCESS", "DT145_10:PREPARATION"],
+          "@stageId": ["DT145_10:UC_RTXOUS", "DT145_10:UC_LP5DLJ"],
           "@ufCrm6_1702368155": [id], 
         },
         select: [
@@ -101,7 +101,8 @@ export function listGet(arr) {
         IBLOCK_TYPE_ID: "lists",
         IBLOCK_ID: "116",
         FILTER: {
-          PROPERTY_1560: arr,
+          PROPERTY_1652: arr,
+          NAME: 'Подписанный документ',
         },
       },
       (result) => {
@@ -128,7 +129,7 @@ export function setIdFile(id) {
         if (result.error()) {
           reject(result.error());
         } else {
-          resolve(Object.values(result.data()[0]["PROPERTY_216"])[0]);
+          resolve(Object.values(result.data()[0]["PROPERTY_1650"])[0]);
         }
       }
     );
