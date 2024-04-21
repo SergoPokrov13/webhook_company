@@ -1,24 +1,22 @@
-const mainCompany = "UF_CRM_1713469133";
-const secondCompany = "UF_CRM_1713278591";
 const axios = require("axios");
-const webhook = `https://itr24.bitrix24.ru/rest/1/9fw61yqqc6se2xeq/`;
+const webhook = `https://b24.schtandart.com/rest/2516/poigumi6wtbwboxw/`;
 let resaultCompany = [];
 
 CompanyGetList(0);
 
 async function addSecondCompany(arr) {
-  console.log(arr);
-  arr.map((element) => {
-    console.log(element.mainCompany, element.secondCompany);
-    axios.get(webhook + "crm.company.update", {
-      params: {
-        id: element.mainCompany,
-        fields: {
-          [secondCompany]: element.secondCompany,
-        },
-      },
-    });
-  });
+  console.log(arr[0]);
+  // arr.map((element) => {
+    // console.log(arr[0].mainCompany, arr[0].secondCompany);
+    // axios.get(webhook + "crm.company.update", {
+    //   params: {
+    //     id: arr[0].mainCompany,
+    //     fields: {
+    //       "UF_CRM_1713714654": arr[0].secondCompany,
+    //     },
+    //   },
+    // });
+  // });
 }
 
 function parserArr(mCompany, sCompany) {
@@ -37,15 +35,15 @@ async function CompanyGetList(lastId) {
   let { data } = await axios.get(webhook + "crm.company.list", {
     params: {
       order: { ID: "ASC" },
-      filter: { ">ID": lastId, "!UF_CRM_1713469133": "" },
-      select: ["ID", mainCompany],
+      filter: { ">ID": lastId, "!UF_CRM_1652945793": "" },
+      select: ["ID", "UF_CRM_1652945793"],
       start: -1,
     },
   });
   if (data.result.length > 0) {
     lastId = data.result.at(-1)["ID"];
     for (key in data.result) {
-      parserArr(data.result[key].UF_CRM_1713469133, data.result[key].ID);
+      parserArr(data.result[key].UF_CRM_1652945793, data.result[key].ID);
     }
     CompanyGetList(lastId);
     console.log(data.result);
