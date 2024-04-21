@@ -1,14 +1,27 @@
-const GOLOVNOY = "UF_CRM_1713469133";
-const DOCHERNIY = "UF_CRM_1713278591";
+const mainCompany = "UF_CRM_1713469133";
+const secondCompany = "UF_CRM_1713278591";
 
 const axios = require("axios");
 const webhook = `https://itr24.bitrix24.ru/rest/1/9fw61yqqc6se2xeq/`;
-let object = {};
-let arr = [];
-let newArr = [];
+let resaultCompany = [];
+
 CompanyGetList(0);
+
+
 async function addDocher(object) {
   console.log(object);
+}
+
+function parserArr(mCompany, sCompany) {
+  let indexMainCompany = resaultCompany.findIndex( (item) => {
+    return item.mainCompany === mCompany;
+  });
+  if(indexMainCompany == -1){
+    resaultCompany.push({'mainCompany': mCompany, 
+                         'secondCompany': [sCompany]});
+  } else {
+   resaultCompany[indexMainCompany].secondCompany.push(sCompany);
+  }
 }
 
 async function CompanyGetList(lastId) {
@@ -16,39 +29,21 @@ async function CompanyGetList(lastId) {
   let { data } = await axios.get(webhook + "crm.company.list", {
     params: {
       order: { ID: "ASC" },
-      filter: { ">ID": lastId },
-      select: ["ID", GOLOVNOY],
+      filter: { ">ID": lastId, "!UF_CRM_1713469133" : '' },
+      select: ["ID", mainCompany],
       start: -1,
     },
   });
-  if (data.result.length > 0) {
-    data.result.map((i) => {
-      if (i[GOLOVNOY]) {
-        object = { glav: i[GOLOVNOY], docher: i.ID };
-        arr.push(object);
-      }
-    });
+  if (data.result.length > 0) {    
     lastId = data.result.at(-1)["ID"];
-    // await addDocher(object);
+    for(key in data.result) {
+      parserArr(data.result[key].UF_CRM_1713469133, data.result[key].ID);    
+    }
     CompanyGetList(lastId);
+    console.log(data.result);
   } else {
-    arr.map((item) => {
-      if (newArr.length > 1) {
-        newArr.map((element) => {
-          // console.log(element.glav, item.glav)
-          if (element.glav == item.glav) {
-            // тут нужно удалить предыдущий элемент массива у которого такое же значение glav
-            console.log(newArr);
-            object = { glav: item.glav, docher: [item.docher, element.docher] };
-            console.log(object);
-            newArr.push(object);
-          }
-        });
-      } else {
-        newArr.push(item);
-      }
-    });
-    console.log(arr,newArr, "finish");
+    console.log(resaultCompany);
+    console.log("finish");
   }
 }
 
